@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="munera">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="مرسم منيرة" />
+  <meta name="theme-color" content="#ff5c93" id="meta-theme-color" />
+  <title>مرسم منيرة السحري 👑🎨</title>
+  <link rel="manifest" href="./manifest.json" crossorigin="use-credentials" />
+  <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- خلفية زخرفية متحركة لطيفة -->
+  <div class="bg-decorations" aria-hidden="true">
+    <span class="floating-deco d1" id="deco-1">👑</span>
+    <span class="floating-deco d2" id="deco-2">🦋</span>
+    <span class="floating-deco d3" id="deco-3">🌸</span>
+    <span class="floating-deco d4" id="deco-4">✨</span>
+    <span class="floating-deco d5" id="deco-5">💖</span>
+    <span class="floating-deco d6" id="deco-6">🎨</span>
+  </div>
+
+  <!-- تطبيق المرسم الرئيسي -->
+  <div class="app-shell">
+    <!-- الشريط العلوي -->
+    <header class="top-bar">
+      <div class="brand-section">
+        <div class="brand-badge" id="brand-badge" title="اضغط للمفاجأة!">
+          <span class="brand-icon" id="brand-icon">👑</span>
+          <div class="brand-text">
+            <h1 id="studio-title">مرسم منيرة</h1>
+            <span class="studio-subtitle" id="studio-subtitle">الأميرة الفنانة الصغيرة ✨</span>
+          </div>
+        </div>
+
+        <!-- زر تبديل الثيم: منيرة (الافتراضي) ⇄ هادي وسلطان (الأولاد) -->
+        <div class="theme-switcher" role="group" aria-label="تبديل الثيم">
+          <button type="button" class="theme-btn active" id="btn-theme-munera" data-target-theme="munera">
+            <span class="theme-emoji">👑</span>
+            <span class="theme-label">مرسم منيرة</span>
+          </button>
+          <button type="button" class="theme-btn" id="btn-theme-boys" data-target-theme="boys">
+            <span class="theme-emoji">🚀</span>
+            <span class="theme-label">مرسم هادي وسلطان</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- أزرار التحكم العلوية -->
+      <div class="top-actions">
+        <button type="button" class="action-btn" id="btn-undo" title="تراجع عن آخر خطوة" disabled>
+          <span class="btn-emoji">↩️</span>
+          <span class="btn-text">تراجع</span>
+        </button>
+
+        <button type="button" class="action-btn" id="btn-redo" title="إعادة الخطوة" disabled>
+          <span class="btn-emoji">↪️</span>
+          <span class="btn-text">إعادة</span>
+        </button>
+
+        <button type="button" class="action-btn" id="btn-paper-mode" title="تبديل لون الورقة (نهاري / ليلي مضيء)">
+          <span class="btn-emoji" id="paper-mode-icon">🌙</span>
+          <span class="btn-text" id="paper-mode-text">ورقة ليلية</span>
+        </button>
+
+        <button type="button" class="action-btn highlight-btn" id="btn-coloring-book" title="دفتر اللوحات المخططة للتلوين">
+          <span class="btn-emoji">📖</span>
+          <span class="btn-text">دفتر التلوين</span>
+        </button>
+
+        <button type="button" class="action-btn" id="btn-gallery" title="معرض اللوحات المحفوظة">
+          <span class="btn-emoji">🖼️</span>
+          <span class="btn-text">لوحاتي</span>
+          <span class="gallery-badge" id="gallery-count">0</span>
+        </button>
+
+        <button type="button" class="action-btn danger-btn" id="btn-clear" title="لوحة جديدة نظيفة">
+          <span class="btn-emoji">🫧</span>
+          <span class="btn-text">مسح الكل</span>
+        </button>
+
+        <button type="button" class="action-btn icon-only-btn" id="btn-sound" title="تشغيل / كتم الصوت">
+          <span class="btn-emoji" id="sound-icon">🔊</span>
+        </button>
+
+        <button type="button" class="action-btn celebrate-btn" id="btn-save" title="احتفال وحفظ اللوحة!">
+          <span class="btn-emoji">🎉</span>
+          <span class="btn-text">حفظ واحتفال!</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- منطقة العمل الوسطى: الأدوات + اللوحة -->
+    <main class="studio-workspace">
+      <!-- شريط الأدوات الجانبي -->
+      <aside class="tools-dock" aria-label="أدوات الرسم">
+        <div class="tools-list">
+          <button type="button" class="tool-btn active" data-tool="brush" title="الفرشاة الناعمة">
+            <span class="tool-icon">🖌️</span>
+            <span class="tool-name">فرشاة</span>
+          </button>
+
+          <button type="button" class="tool-btn" data-tool="marker" title="قلم التلوين العريض">
+            <span class="tool-icon">🖍️</span>
+            <span class="tool-name">تلوين</span>
+          </button>
+
+          <button type="button" class="tool-btn templates-tool" id="btn-dock-templates" title="صور مخططة جاهزة للتلوين">
+            <span class="tool-icon">🎨</span>
+            <span class="tool-name">صور تلوين</span>
+          </button>
+
+          <button type="button" class="tool-btn glow-tool" data-tool="glow" title="الفرشاة المضيئة السحرية">
+            <span class="tool-icon">✨</span>
+            <span class="tool-name">مضيء</span>
+          </button>
+
+          <button type="button" class="tool-btn" data-tool="bucket" title="دلو التلوين السحري">
+            <span class="tool-icon">🪣</span>
+            <span class="tool-name">دلو ألوان</span>
+          </button>
+
+          <button type="button" class="tool-btn" data-tool="stamp" id="btn-tool-stamp" title="الأختام والملصقات السحرية">
+            <span class="tool-icon" id="stamp-tool-icon">👑</span>
+            <span class="tool-name">ملصقات</span>
+          </button>
+
+          <button type="button" class="tool-btn" data-tool="eraser" title="الممحاة">
+            <span class="tool-icon">🧽</span>
+            <span class="tool-name">ممحاة</span>
+          </button>
+        </div>
+
+        <div class="dock-divider"></div>
+
+        <!-- أحجام الخط / الفرشاة -->
+        <div class="brush-sizes" aria-label="حجم الفرشاة">
+          <button type="button" class="size-btn" data-size="8" title="حجم صغير">
+            <span class="size-dot" style="width: 10px; height: 10px;"></span>
+          </button>
+          <button type="button" class="size-btn active" data-size="18" title="حجم وسط">
+            <span class="size-dot" style="width: 18px; height: 18px;"></span>
+          </button>
+          <button type="button" class="size-btn" data-size="32" title="حجم كبير">
+            <span class="size-dot" style="width: 26px; height: 26px;"></span>
+          </button>
+          <button type="button" class="size-btn" data-size="52" title="حجم عملاق">
+            <span class="size-dot" style="width: 34px; height: 34px;"></span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- مسرح اللوحة الفنية -->
+      <section class="canvas-stage" id="canvas-stage">
+        <!-- شريط الصور المخططة السريع للتلوين (يظهر عند الضغط على زر صور تلوين) -->
+        <div class="templates-tray hidden" id="templates-tray">
+          <span class="tray-label">اختر صورة لتلوينها:</span>
+          <div class="templates-quick-list" id="templates-quick-list"></div>
+          <button type="button" class="open-all-templates-btn" id="btn-open-all-templates" title="عرض كل الرسومات بحجم كبير">
+            كل اللوحات 📖
+          </button>
+        </div>
+
+        <!-- شريط اختيار الملصقات العائم (يظهر عند اختيار أداة الملصقات) -->
+        <div class="stamps-tray hidden" id="stamps-tray">
+          <span class="tray-label">اختر ملصقاً واضغط على اللوحة:</span>
+          <div class="stamps-list" id="stamps-list"></div>
+        </div>
+
+        <!-- شارة رسمة التلوين النشطة -->
+        <div class="active-template-pill hidden" id="active-template-pill">
+          <span id="active-template-name">🇰🇼 علم دولة الكويت الحبيبة</span>
+          <button type="button" class="remove-template-btn" id="btn-remove-template" title="إخفاء خطوط الرسمة">✕</button>
+        </div>
+
+        <!-- حاوية طبقات الرسم -->
+        <div class="canvas-container" id="canvas-container">
+          <!-- طبقة الرسم والتلوين الأساسية -->
+          <canvas id="draw-canvas"></canvas>
+          <!-- طبقة خطوط دفتر التلوين (تبقى واضحة فوق التلوين) -->
+          <canvas id="outline-canvas"></canvas>
+          <!-- طبقة المؤثرات السحرية والنجوم المتطايرة أثناء اللمس -->
+          <canvas id="fx-canvas"></canvas>
+        </div>
+      </section>
+    </main>
+
+    <!-- شريط الألوان السفلي المبهج -->
+    <footer class="color-palette-bar" aria-label="لوحة الألوان">
+      <div class="colors-scroll" id="colors-container">
+        <!-- يتم توليد أزرار الألوان ديناميكياً في app.js -->
+      </div>
+      <label class="custom-color-wrapper" title="اختيار أي لون إضافي">
+        <input type="color" id="custom-color-Input" value="#ff477e" />
+        <span class="custom-color-btn">🎨</span>
+      </label>
+    </footer>
+  </div>
+
+  <!-- نافذة دفتر التلوين السحري -->
+  <div class="modal-backdrop hidden" id="coloring-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-emoji">🎨</span>
+          <h2>لوحات التلوين التعليمية والإبداعية</h2>
+        </div>
+        <div class="modal-tabs">
+          <button type="button" class="modal-tab active" data-filter="all">كل اللوحات ✨</button>
+          <button type="button" class="modal-tab" data-filter="munera">مختارات منيرة 👑</button>
+          <button type="button" class="modal-tab" data-filter="boys">مختارات هادي وسلطان 🚀</button>
+        </div>
+        <button type="button" class="modal-close-btn" id="close-coloring-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="coloring-grid" id="coloring-grid">
+          <!-- يتم توليد بطاقات التلوين مع معاينات مباشرة -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة معرض اللوحات المحفوظة -->
+  <div class="modal-backdrop hidden" id="gallery-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-emoji">🖼️</span>
+          <h2 id="gallery-modal-title">معرض لوحات منيرة وهادي وسلطان</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="close-gallery-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="gallery-grid" id="gallery-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة تأكيد مسح اللوحة اللطيفة للأطفال -->
+  <div class="modal-backdrop hidden" id="clear-modal">
+    <div class="modal-card small-modal">
+      <div class="confirm-content">
+        <div class="confirm-big-emoji">🫧🎨</div>
+        <h3>هل تريدين فتح صفحة بيضاء جديدة؟</h3>
+        <p id="clear-modal-desc">سيتم تنظيف اللوحة الحالية بالفقاعات السحرية!</p>
+        <div class="confirm-buttons">
+          <button type="button" class="confirm-yes-btn" id="confirm-clear-yes">نعم، لوحة جديدة! ✨</button>
+          <button type="button" class="confirm-no-btn" id="confirm-clear-no">لا، أريد إكمال رسمتي ↩️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- رسالة إشعار احتفالية عائمة (Toast) -->
+  <div class="magic-toast hidden" id="magic-toast">
+    <span class="toast-emoji" id="toast-emoji">🎉</span>
+    <span class="toast-text" id="toast-text">رائع جداً يا فنانة! تم حفظ اللوحة!</span>
+  </div>
+
+  <script src="sound.js"></script>
+  <script src="coloring-pages.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
